@@ -1,106 +1,133 @@
+// --- CONFIGURATION ---
 let level = 1;
 let count = 0;
-let canFinish = false;
+const music = document.getElementById('bgMusic');
 
-// DOM Elements
-const progressBar = document.getElementById('progressBar');
+// --- ELEMENTS ---
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const actionBtn = document.getElementById('actionBtn');
 const taskText = document.getElementById('taskText');
 const heading = document.getElementById('mainHeading');
-const noBtn = document.getElementById('noBtn');
-const yesBtn = document.getElementById('yesBtn');
-const actionBtn = document.getElementById('actionBtn');
-const audio = document.getElementById('bgMusic');
+const progressBar = document.getElementById('progressBar');
 
-function updateProgress(percent) { 
-    progressBar.style.width = percent + '%'; 
-}
+// --- GAME LOGIC ---
 
-// --- LEVEL 1 & 4 LOGIC ---
-function doYes(e) {
-    if (e) e.preventDefault();
-
-    if(level === 1) {
-        count++;
-        updateProgress(count * 10);
-        moveRandom(yesBtn); // Yes button moves randomly
-        spawnHeart();
-        
-        if(count >= 3) {
-            level = 2; count = 0;
-            yesBtn.style.display = 'none';
-            noBtn.style.display = 'none'; 
-            taskText.innerText = "Level 2: Collect the Love";
-            heading.innerText = "Tap the screen 10 times!";
-        }
-    } else if (level === 4 && canFinish) {
-        celebrate();
-    }
-}
-
-// --- LEVEL 2 LOGIC ---
-function screenClicked(e) {
-    if (e.target.tagName === 'BUTTON') return; // Don't count button clicks
-
-    if(level === 2) {
-        count++;
-        spawnHeart();
-        updateProgress(30 + (count * 3));
-        
-        if(count >= 10) {
-            level = 3; count = 0;
-            taskText.innerText = "Level 3: The Ultimate Proof";
-            heading.innerText = "Tap the Golden Heart!";
-            actionBtn.style.display = 'flex';
-        }
-    }
-}
-
-// --- LEVEL 3 LOGIC ---
-function doAction(e) {
-    if (e) e.preventDefault();
+// LEVEL 1: Catch the Yes Button
+function handleYesClick(e) {
+    if(e) e.preventDefault(); // Stop mobile issues
     
-    if(level === 3) {
+    if (level === 1) {
         count++;
-        updateProgress(60 + (count * 4));
-        actionBtn.style.transform = `scale(${1 + count*0.1})`;
+        updateProgress(count * 10); // 10% per click
         spawnHeart();
         
-        if(count >= 10) {
-            level = 4;
-            canFinish = true;
-            actionBtn.style.display = 'none';
-            yesBtn.style.display = 'flex';
-            yesBtn.style.position = 'relative'; // Reset position
-            yesBtn.style.left = 'auto';
-            yesBtn.style.top = 'auto';
-            yesBtn.style.transform = 'scale(1.5)';
-            taskText.innerText = "Final Step: Claim your Valentine";
-            heading.innerText = "You passed! Now say Yes.";
-            updateProgress(100);
+        // Move the button to a random spot
+        moveRandom(yesBtn);
+        
+        // Win Condition for Level 1
+        if (count >= 3) {
+            startLevel2();
+        }
+    } 
+    else if (level === 4) {
+        victory();
+    }
+}
+
+// LEVEL 2: Tap the Screen 10 Times
+function handleScreenTap(e) {
+    // Ignore button clicks
+    if (e.target.tagName === 'BUTTON') return;
+
+    if (level === 2) {
+        count++;
+        updateProgress(30 + (count * 3)); // Progress from 30% to 60%
+        spawnHeart();
+        
+        // Visual feedback
+        heading.style.transform = "scale(1.1)";
+        setTimeout(() => heading.style.transform = "scale(1)", 100);
+
+        if (count >= 10) {
+            startLevel3();
         }
     }
 }
 
-// --- MOVEMENT LOGIC ---
-
-// 1. Random Move (For Yes Button)
-function moveRandom(btn) {
-    const x = Math.random() * (window.innerWidth - 120) + 20;
-    const y = Math.random() * (window.innerHeight - 120) + 20;
-    btn.style.position = 'fixed';
-    btn.style.left = x + 'px'; 
-    btn.style.top = y + 'px';
+// LEVEL 3: The Golden Button
+function handleActionClick(e) {
+    if(e) e.preventDefault();
+    
+    if (level === 3) {
+        count++;
+        updateProgress(60 + (count * 4)); // Progress from 60% to 100%
+        spawnHeart();
+        
+        // Grow button
+        actionBtn.style.transform = `scale(${1 + count * 0.1})`;
+        
+        if (count >= 10) {
+            startLevel4();
+        }
+    }
 }
 
-// 2. SMART EVASION (For No Button)
-// Moves directly away from the cursor
-function evadeCursor(e) {
+// --- LEVEL TRANSITIONS ---
+
+function startLevel2() {
+    level = 2;
+    count = 0;
+    yesBtn.style.display = 'none';
+    noBtn.style.display = 'none';
+    taskText.innerText = "Level 2: Collect the Love";
+    heading.innerText = "Tap the empty space 10 times!";
+}
+
+function startLevel3() {
+    level = 3;
+    count = 0;
+    taskText.innerText = "Level 3: Show your passion";
+    heading.innerText = "Tap the Golden Heart!";
+    actionBtn.style.display = 'flex';
+}
+
+function startLevel4() {
+    level = 4;
+    actionBtn.style.display = 'none';
+    
+    taskText.innerText = "Final Step";
+    heading.innerText = "Will you be my Valentine?";
+    
+    yesBtn.style.display = 'flex';
+    yesBtn.style.position = 'relative'; // Center it
+    yesBtn.style.left = 'auto';
+    yesBtn.style.top = 'auto';
+    yesBtn.style.transform = 'scale(1.5)';
+    updateProgress(100);
+}
+
+// --- PHYSICS & UTILITIES ---
+
+function updateProgress(val) {
+    progressBar.style.width = val + "%";
+}
+
+function moveRandom(btn) {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 200) + 100;
+    btn.style.left = `${x}px`;
+    btn.style.top = `${y}px`;
+}
+
+// THE "NO" BUTTON EVASION LOGIC
+function moveNoAway(e) {
     // Get button center
     const rect = noBtn.getBoundingClientRect();
     const btnX = rect.left + rect.width / 2;
     const btnY = rect.top + rect.height / 2;
 
-    // Get mouse position (touch or mouse)
+    // Get cursor/touch position
     let mouseX = e.clientX;
     let mouseY = e.clientY;
     if (e.touches && e.touches.length > 0) {
@@ -108,81 +135,74 @@ function evadeCursor(e) {
         mouseY = e.touches[0].clientY;
     }
 
-    // Calculate distance between mouse and button
+    // Math: Calculate vector away from mouse
     const deltaX = btnX - mouseX;
     const deltaY = btnY - mouseY;
-
-    // Angle away from mouse
     const angle = Math.atan2(deltaY, deltaX);
+    
+    // Move 150px away in that direction
+    const distance = 150;
+    
+    let newX = btnX + Math.cos(angle) * distance - (rect.width/2);
+    let newY = btnY + Math.sin(angle) * distance - (rect.height/2);
 
-    // Distance to move (Fixed distance for smooth "slide")
-    const moveDistance = 150; 
+    // Keep inside screen
+    if (newX < 0) newX = 20;
+    if (newX > window.innerWidth - 100) newX = window.innerWidth - 120;
+    if (newY < 100) newY = 120;
+    if (newY > window.innerHeight - 100) newY = window.innerHeight - 120;
 
-    // Calculate new position
-    let newX = btnX + (Math.cos(angle) * moveDistance) - (rect.width/2);
-    let newY = btnY + (Math.sin(angle) * moveDistance) - (rect.height/2);
-
-    // Boundary Checks (Don't let it go off screen)
-    if (newX < 10) newX = window.innerWidth - 120;
-    if (newX > window.innerWidth - 120) newX = 10;
-    if (newY < 10) newY = window.innerHeight - 120;
-    if (newY > window.innerHeight - 120) newY = 10;
-
-    // Apply Style
-    noBtn.style.position = 'fixed';
     noBtn.style.left = `${newX}px`;
     noBtn.style.top = `${newY}px`;
 }
 
-// --- UTILITIES ---
-
 function spawnHeart() {
-    const h = document.createElement('div');
-    h.className = 'heart-float';
-    h.innerHTML = '❤️';
-    h.style.left = Math.random() * 90 + 'vw';
-    h.style.top = Math.random() * 90 + 'vh';
-    h.style.fontSize = Math.random() * 20 + 20 + 'px';
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 4000);
+    const heart = document.createElement('div');
+    heart.className = 'heart-float';
+    heart.innerText = '❤️';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
 }
 
-function celebrate() {
-    if (audio) {
-        audio.play().catch(e => console.log("Audio needed interaction"));
-    }
+function victory() {
+    // Try to play music
+    music.play().catch(e => console.log("Audio requires interaction"));
+    
+    // Confetti
     confetti({
         particleCount: 200,
         spread: 100,
-        origin: { y: 0.6 },
-        colors: ['#ff4d6d', '#ffd700', '#ffffff']
+        origin: { y: 0.6 }
     });
+
+    // Update UI
     document.querySelector('.card').innerHTML = `
-        <h1 style="font-size: 3.5rem; text-shadow: 0 0 20px #ff4d6d;">Yay! ❤️</h1>
-        <div style="color:white; font-size: 2rem; margin-top: 20px; font-family: 'Great Vibes', cursive;">You're my forever</div>
-        <div style="font-size: 5rem; margin-top: 20px; animation: floatUp 2s infinite ease-in-out;">💍✨💖</div>
+        <h1 style="font-size:3.5rem;">YAY! ❤️</h1>
+        <p style="color:white; font-size:1.5rem; margin-top:20px;">You are my forever.</p>
+        <div style="font-size:4rem; margin-top:30px;">💍</div>
     `;
-    document.body.style.background = "radial-gradient(circle, var(--dark-pink), #000)";
-    setInterval(spawnHeart, 300);
+    
+    // Infinite hearts
+    setInterval(spawnHeart, 200);
 }
 
-// --- EVENTS ---
+// --- EVENT LISTENERS ---
 
-// Level 2 Listener
-document.body.addEventListener('click', screenClicked);
-document.body.addEventListener('touchstart', screenClicked);
+// Level 1: Yes Button Random Move
+yesBtn.addEventListener('click', handleYesClick);
+yesBtn.addEventListener('touchstart', handleYesClick);
 
-// No Button Evasion
-noBtn.addEventListener('mousemove', evadeCursor); // Desktop
-noBtn.addEventListener('touchstart', (e) => { // Mobile
-    e.preventDefault(); 
-    evadeCursor(e); 
-});
-// Fail-safe: If they manage to click No, it acts as Yes
-noBtn.addEventListener('click', doYes);
+// Level 1: No Button Evasion
+noBtn.addEventListener('mousemove', moveNoAway);
+noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNoAway(e); });
+noBtn.addEventListener('click', handleYesClick); // Fallback: Click No = Yes
 
-// Yes & Action Buttons
-yesBtn.addEventListener('touchstart', doYes);
-yesBtn.addEventListener('click', doYes);
-actionBtn.addEventListener('touchstart', doAction);
-actionBtn.addEventListener('click', doAction);
+// Level 2: Screen Tap
+document.body.addEventListener('click', handleScreenTap);
+document.body.addEventListener('touchstart', handleScreenTap);
+
+// Level 3: Action Button
+actionBtn.addEventListener('click', handleActionClick);
+actionBtn.addEventListener('touchstart', handleActionClick);
