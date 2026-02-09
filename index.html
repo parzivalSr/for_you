@@ -2,22 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Question</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Forever Quest ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="container">
-        <div id="main-card">
-            <img id="image-display" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCBmcm9tX2dpZl9zZWFyY2gmY3Q9Zw/K6S8v22N9vFvW/giphy.gif" alt="Cute heart">
-            <h1 id="questionText">Will you be my Valentine?</h1>
-            <div class="buttons">
-                <button id="yesBtn">Yes</button>
-                <button id="noBtn">No</button>
-            </div>
+<body onclick="screenClicked()">
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="bokeh"></div>
+    <div class="progress-container"><div id="progressBar"></div></div>
+
+    <div class="card">
+        <div class="instruction" id="taskText">Level 1: Catch my Heart</div>
+        <h1 id="mainHeading">Will you be my Valentine?</h1>
+        <div class="circle-container">
+            <button id="noBtn">No</button>
+            <button id="yesBtn" ontouchstart="doYes(event)" onclick="doYes(event)">Yes</button>
+            <button id="actionBtn" ontouchstart="doAction(event)" onclick="doAction(event)">Prove it! ❤️</button>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
