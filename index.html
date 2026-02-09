@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Forever Quest ❤️</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body onclick="screenClicked()">
-    <audio id="bgMusic" loop>
+<body>
+    <audio id="bgMusic" loop playsinline>
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
@@ -19,10 +20,11 @@
     <div class="card">
         <div class="instruction" id="taskText">Level 1: Catch my Heart</div>
         <h1 id="mainHeading">Will you be my Valentine?</h1>
+        
         <div class="circle-container">
-            <button id="noBtn">No</button>
-            <button id="yesBtn" ontouchstart="doYes(event)" onclick="doYes(event)">Yes</button>
-            <button id="actionBtn" ontouchstart="doAction(event)" onclick="doAction(event)">Prove it! ❤️</button>
+            <button id="noBtn" type="button">No</button>
+            <button id="yesBtn" type="button">Yes</button>
+            <button id="actionBtn" type="button" style="display:none;">Prove it! ❤️</button>
         </div>
     </div>
 
