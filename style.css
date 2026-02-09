@@ -13,7 +13,9 @@ body {
     background: #0b0104; 
     font-family: 'Arial', sans-serif; 
     overflow: hidden; 
-    touch-action: none; /* Critical for mobile game feel */
+    /* Critical for Mobile: Stops zooming/scrolling */
+    touch-action: none; 
+    user-select: none;
 }
 
 .bokeh {
@@ -57,12 +59,12 @@ h1 {
     font-size: 3rem; 
     margin-bottom: 20px; 
     text-shadow: 0 0 15px var(--pink); 
-    transition: all 0.5s;
+    transition: all 0.3s;
 }
 
 .instruction { 
     color: var(--gold); 
-    font-size: 0.9rem; 
+    font-size: 1rem; 
     text-transform: uppercase; 
     letter-spacing: 2px; 
     margin-bottom: 15px; 
@@ -89,7 +91,7 @@ button {
     cursor: pointer; 
     position: absolute;
     -webkit-tap-highlight-color: transparent; 
-    /* The "Slow" slide effect */
+    /* SMOOTH SLOW MOVEMENT: 0.6s Transition */
     transition: left 0.6s ease-out, top 0.6s ease-out, transform 0.2s;
 }
 
