@@ -3,33 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Forever Quest ❤️</title>
-    
+    <title>A Special Quest For You ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <audio id="bgMusic" loop playsinline>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
 
-    <div class="bokeh"></div>
-    
-    <div class="progress-container">
-        <div id="progressBar"></div>
+    <div class="header">
+        <div class="progress-bg">
+            <div id="progressFill"></div>
+        </div>
+        <div class="lvl-text" id="lvlIndicator">Level 1: The Choice</div>
     </div>
 
     <div class="card">
-        <div class="instruction" id="taskText">Level 1: Catch the Yes Button</div>
-        <h1 id="mainHeading">Will you be my Valentine?</h1>
-        
-        <div class="circle-container">
-            <button id="noBtn" type="button">No</button>
-            <button id="yesBtn" type="button">Yes</button>
-            <button id="actionBtn" type="button">Prove it! ❤️</button>
+        <h1 id="heading">Will you be my Valentine?</h1>
+        <div class="game-area" id="gameArea">
+            <button id="mainBtn" onclick="handleYes()">Yes</button>
+            <button id="noBtn" ontouchstart="handleNo(event)" onmouseover="handleNo(event)">No</button>
         </div>
     </div>
+
+    <button id="collector" onclick="handleCollect()">Tap Me!</button>
 
     <script src="script.js"></script>
 </body>
