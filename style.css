@@ -1,131 +1,59 @@
+/* style.css */
 :root { 
     --pink: #ff4d6d; 
     --dark-pink: #c9184a; 
     --gold: #ffd700; 
 }
 
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
 body {
-    margin: 0; 
-    height: 100vh; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    background: #0b0104; 
-    font-family: 'Arial', sans-serif; 
-    overflow: hidden; 
-    /* Critical for Mobile: Stops zooming/scrolling */
-    touch-action: none; 
-    user-select: none;
+    margin: 0; height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: #0b0104; font-family: 'Arial', sans-serif; overflow: hidden; touch-action: none;
 }
 
-.bokeh {
-    position: fixed; 
-    width: 100vw; 
-    height: 100vh;
-    background: radial-gradient(circle at 50% 50%, #4a0010 0%, #0b0104 100%); 
-    z-index: -1;
+/* Progress Bar */
+.header {
+    position: fixed; top: 0; width: 100%; padding: 20px;
+    display: flex; flex-direction: column; align-items: center; z-index: 100;
 }
+.progress-bg { width: 80%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+#progressFill { width: 0%; height: 100%; background: var(--pink); transition: width 0.4s ease; box-shadow: 0 0 10px var(--pink); }
+.lvl-text { color: var(--gold); font-size: 0.7rem; letter-spacing: 2px; margin-top: 8px; text-transform: uppercase; font-weight: bold; }
 
-.progress-container {
-    position: fixed; 
-    top: 20px; 
-    width: 80%; 
-    height: 10px; 
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px; 
-    z-index: 100;
-}
-
-#progressBar {
-    width: 0%; 
-    height: 100%; 
-    background: var(--pink); 
-    border-radius: 10px; 
-    transition: width 0.3s;
-    box-shadow: 0 0 15px var(--pink);
-}
-
-.card { 
-    text-align: center; 
-    z-index: 10; 
-    padding: 20px; 
-    width: 100%; 
-    max-width: 400px; 
-}
-
-h1 { 
-    color: white; 
-    font-family: 'Great Vibes', cursive; 
-    font-size: 3rem; 
-    margin-bottom: 20px; 
-    text-shadow: 0 0 15px var(--pink); 
-    transition: all 0.3s;
-}
-
-.instruction { 
-    color: var(--gold); 
-    font-size: 1rem; 
-    text-transform: uppercase; 
-    letter-spacing: 2px; 
-    margin-bottom: 15px; 
-    font-weight: bold;
-    min-height: 20px;
-}
-
-.circle-container { 
-    position: relative; 
-    height: 300px; 
-    width: 100%;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-}
-
-button {
-    width: 100px; 
-    height: 100px; 
-    border-radius: 50%; 
-    font-weight: bold;
-    font-size: 1.2rem;
-    border: 3px solid white; 
-    cursor: pointer; 
-    position: absolute;
-    -webkit-tap-highlight-color: transparent; 
-    /* SMOOTH SLOW MOVEMENT: 0.6s Transition */
-    transition: left 0.6s ease-out, top 0.6s ease-out, transform 0.2s;
-}
-
-#yesBtn { 
-    background: var(--pink); 
-    color: white; 
-    box-shadow: 0 0 30px var(--pink); 
-    z-index: 50; 
-}
-
-#noBtn { 
-    background: rgba(255,255,255,0.05); 
-    color: rgba(255,255,255,0.4); 
-    border-color: rgba(255,255,255,0.2); 
-    z-index: 51; 
-}
-
-#actionBtn { 
-    background: var(--gold); 
-    color: #000; 
-    display: none; 
-    z-index: 60; 
-}
-
+/* Floating Hearts Animation */
 .heart-float {
-    position: absolute; 
-    color: var(--pink); 
-    opacity: 0.6; 
-    pointer-events: none;
-    filter: drop-shadow(0 0 10px var(--pink)); 
-    animation: floatUp 4s linear forwards;
+    position: absolute; color: var(--pink); opacity: 0.6; pointer-events: none;
+    filter: drop-shadow(0 0 8px var(--pink)); animation: floatUp 5s linear forwards;
 }
 
 @keyframes floatUp {
-    0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+    0% { transform: translateY(110vh) scale(0.5); opacity: 1; }
     100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
 }
+
+.card { text-align: center; z-index: 10; padding: 20px; width: 100%; max-width: 400px; }
+h1 { 
+    color: white; font-family: 'Great Vibes', cursive; font-size: 2.2rem; 
+    margin: 20px 0; text-shadow: 0 0 15px var(--pink); min-height: 80px;
+}
+
+.game-area { position: relative; height: 200px; display: flex; justify-content: center; align-items: center; }
+
+button {
+    width: 110px; height: 110px; border-radius: 50%; font-weight: bold;
+    border: 3px solid white; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-family: 'Arial', sans-serif; font-size: 1.1rem;
+}
+
+#mainBtn { background: var(--pink); color: white; box-shadow: 0 0 20px var(--pink); z-index: 50; position: relative; }
+#noBtn { background: #fff; color: #000; position: absolute; z-index: 40; }
+
+#collector { 
+    width: 80px; height: 80px; background: var(--gold); border: none;
+    position: fixed; display: none; z-index: 150; box-shadow: 0 0 25px var(--gold);
+    animation: pulse 1s infinite; color: black; font-size: 0.8rem;
+}
+
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+.final-msg { color: white; font-family: 'Great Vibes', cursive; font-size: 3.5rem; animation: pulse 1s infinite; }
