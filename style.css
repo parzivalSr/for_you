@@ -1,59 +1,139 @@
-/* style.css */
-:root { 
-    --pink: #ff4d6d; 
-    --dark-pink: #c9184a; 
-    --gold: #ffd700; 
+:root {
+    --pink: #ff2f68;
+    --dark: #5a001b;
+    --gold: #ffd700;
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
 body {
-    margin: 0; height: 100vh; display: flex; align-items: center; justify-content: center;
-    background: #0b0104; font-family: 'Arial', sans-serif; overflow: hidden; touch-action: none;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, #ff5c8a, #5a001b);
+    font-family: Arial, sans-serif;
+    overflow: hidden;
 }
 
-/* Progress Bar */
 .header {
-    position: fixed; top: 0; width: 100%; padding: 20px;
-    display: flex; flex-direction: column; align-items: center; z-index: 100;
-}
-.progress-bg { width: 80%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-#progressFill { width: 0%; height: 100%; background: var(--pink); transition: width 0.4s ease; box-shadow: 0 0 10px var(--pink); }
-.lvl-text { color: var(--gold); font-size: 0.7rem; letter-spacing: 2px; margin-top: 8px; text-transform: uppercase; font-weight: bold; }
-
-/* Floating Hearts Animation */
-.heart-float {
-    position: absolute; color: var(--pink); opacity: 0.6; pointer-events: none;
-    filter: drop-shadow(0 0 8px var(--pink)); animation: floatUp 5s linear forwards;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 100;
 }
 
-@keyframes floatUp {
-    0% { transform: translateY(110vh) scale(0.5); opacity: 1; }
-    100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+.progress-bg {
+    width: 80%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.card { text-align: center; z-index: 10; padding: 20px; width: 100%; max-width: 400px; }
-h1 { 
-    color: white; font-family: 'Great Vibes', cursive; font-size: 2.2rem; 
-    margin: 20px 0; text-shadow: 0 0 15px var(--pink); min-height: 80px;
+#progressFill {
+    width: 0%;
+    height: 100%;
+    background: var(--pink);
+    box-shadow: 0 0 12px var(--pink);
+    transition: .4s;
 }
 
-.game-area { position: relative; height: 200px; display: flex; justify-content: center; align-items: center; }
+.lvl-text {
+    margin-top: 8px;
+    color: #ffe6ec;
+    font-size: .7rem;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.card {
+    text-align: center;
+    z-index: 10;
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+}
+
+h1 {
+    color: white;
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.3rem;
+    text-shadow: 0 0 18px var(--pink);
+    min-height: 80px;
+}
+
+.game-area {
+    position: relative;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
 
 button {
-    width: 110px; height: 110px; border-radius: 50%; font-weight: bold;
-    border: 3px solid white; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    font-family: 'Arial', sans-serif; font-size: 1.1rem;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: 3px solid white;
+    transition: .3s;
 }
 
-#mainBtn { background: var(--pink); color: white; box-shadow: 0 0 20px var(--pink); z-index: 50; position: relative; }
-#noBtn { background: #fff; color: #000; position: absolute; z-index: 40; }
-
-#collector { 
-    width: 80px; height: 80px; background: var(--gold); border: none;
-    position: fixed; display: none; z-index: 150; box-shadow: 0 0 25px var(--gold);
-    animation: pulse 1s infinite; color: black; font-size: 0.8rem;
+#yesBtn {
+    background: var(--pink);
+    color: white;
+    box-shadow: 0 0 25px var(--pink);
 }
 
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-.final-msg { color: white; font-family: 'Great Vibes', cursive; font-size: 3.5rem; animation: pulse 1s infinite; }
+#noBtn {
+    background: white;
+    color: var(--pink);
+    border-color: var(--pink);
+    position: relative;
+}
+
+#collector {
+    width: 80px;
+    height: 80px;
+    background: var(--gold);
+    border: none;
+    border-radius: 50%;
+    display: none;
+    position: fixed;
+    z-index: 150;
+    box-shadow: 0 0 30px var(--gold);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+.heart {
+    position: absolute;
+    font-size: 22px;
+    animation: float 5s linear forwards;
+}
+
+@keyframes float {
+    from { transform: translateY(110vh) scale(.6); }
+    to { transform: translateY(-10vh) scale(1.6); opacity: 0; }
+}
+
+.final-msg {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.2rem;
+    color: white;
+    text-shadow: 0 0 20px var(--pink);
+    animation: pulse 1s infinite;
+}
