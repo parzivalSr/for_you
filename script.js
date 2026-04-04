@@ -110,7 +110,7 @@ function bodyTap() {
 function finish() {
     fill.style.width = "100%";
     document.querySelector(".card").innerHTML = `
-        <div class="final-msg">You're my forever, Abhilipsa ❤️</div>
+        <div class="final-msg">You're my forever, <ENTER NAME> ❤️</div>
         <div style="font-size:4.5rem;margin-top:20px;">💍✨💖</div>
     `;
 }
