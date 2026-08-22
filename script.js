@@ -101,7 +101,7 @@ function collect() {
 function finish() {
     fill.style.width = "100%";
     document.querySelector(".card").innerHTML = `
-        <div class="final-msg">it's you, Monishka<br>I Love You</div>
+        <div class="final-msg" style="max-width: none; width: 90vw; word-spacing: 9999px;">it's you, Monishka<br>I Love You</div>
         <div style="font-size:4.5rem;margin-top:20px;">✨</div>
     `;
 }
