@@ -12,27 +12,35 @@ function hearts() {
     h.className = "heart";
     h.innerHTML = "❤️";
     h.style.left = Math.random() * 100 + "vw";
-    h.style.color = "#ff2f68";
+    h.style.color = "#e8607d";
     document.body.appendChild(h);
     setTimeout(() => h.remove(), 5000);
 }
 setInterval(hearts, 500);
 
-/* NO button runs away immediately */
+/* NO button shrinks in place on each click */
+let noSize = 110;
+let noClicks = 0;
+const NO_MIN = 20;
+const noPhrases = ["nope", "try again", "not an option", "keep trying", "getting smaller...", "almost gone", "😉"];
 function nope() {
-    noBtn.style.position = "fixed";
-    noBtn.style.left = Math.random() * (window.innerWidth - 120) + 60 + "px";
-    noBtn.style.top = Math.random() * (window.innerHeight - 120) + 60 + "px";
-    heading.innerText = "NO is not allowed 😜";
+    noSize = Math.max(NO_MIN, noSize * 0.85);
+    noBtn.style.width = noSize + "px";
+    noBtn.style.height = noSize + "px";
+    noBtn.style.fontSize = Math.max(0.45, (noSize / 110) * 1.05) + "rem";
+    noBtn.style.borderWidth = Math.max(1, (noSize / 110) * 3) + "px";
+    if (noSize <= NO_MIN) noBtn.innerText = "";
+    heading.innerText = noPhrases[Math.min(noClicks, noPhrases.length - 1)];
+    noClicks++;
 }
 
 /* YES button logic handling levels */
 function yes() {
     if (level === 1) {
         level = 2;
-        lvl.innerText = "Level 2 : Catch the Heart";
-        fill.style.width = "20%";
-        heading.innerText = "Catch YES three times!";
+        lvl.innerText = "Level 2 : Chase It";
+        fill.style.width = "30%";
+        heading.innerText = "some things are worth chasing";
         moveYes();
     } else if (level === 2) {
         count++;
@@ -40,27 +48,24 @@ function yes() {
         if (count >= 3) {
             count = 0;
             level = 3;
-            lvl.innerText = "Level 3 : Golden Spark";
-            fill.style.width = "40%";
-            heading.innerText = "Tap the golden circle!";
+            lvl.innerText = "Level 3 : One Spark";
+            fill.style.width = "65%";
+            heading.innerText = "find the spark";
             collector.style.display = "block";
             // Hide YES button for this level
             yesBtn.style.display = "none"; 
             randomCollector();
         }
     } else if (level === 4) {
-        // Just keep moving YES if they tap it during level 4 (though it's mostly hidden/inactive until level 5)
-        moveYes();
-        heading.innerText = "Keep choosing YES 💕";
-    } else if (level === 5) {
         finish();
     }
 }
 
 function moveYes() {
+    const safeTop = window.innerHeight * 0.4; // keep clear of heading area
     yesBtn.style.position = "fixed";
     yesBtn.style.left = Math.random() * (window.innerWidth - 120) + 60 + "px";
-    yesBtn.style.top = Math.random() * (window.innerHeight - 120) + 60 + "px";
+    yesBtn.style.top = safeTop + Math.random() * (window.innerHeight - safeTop - 120) + "px";
 }
 
 function randomCollector() {
@@ -75,33 +80,19 @@ function collect() {
     if (count >= 3) {
         count = 0;
         level = 4;
-        lvl.innerText = "Level 4 : Shower of Love";
-        fill.style.width = "60%";
-        heading.innerText = "Tap anywhere!";
+        lvl.innerText = "Last Level : The Real One";
+        fill.style.width = "100%";
+        heading.innerText = "so... will you?";
         collector.style.display = "none";
-        document.body.onclick = bodyTap;
-    }
-}
 
-function bodyTap() {
-    count++;
-    hearts(); // Spawn extra hearts on click
-    if (count >= 10) {
-        count = 0;
-        document.body.onclick = null; // Stop body click event
-        level = 5;
-        lvl.innerText = "Final Level ❤️";
-        fill.style.width = "90%";
-        heading.innerText = "Final Answer?";
-        
         // Bring back the YES button
         yesBtn.style.display = "block";
         yesBtn.style.position = "relative";
         yesBtn.style.left = "auto";
         yesBtn.style.top = "auto";
-        yesBtn.innerText = "YES!";
+        yesBtn.innerText = "yes";
         yesBtn.style.transform = "scale(1.3)";
-        
+
         // Ensure NO button is gone
         noBtn.style.display = "none";
     }
@@ -110,7 +101,7 @@ function bodyTap() {
 function finish() {
     fill.style.width = "100%";
     document.querySelector(".card").innerHTML = `
-        <div class="final-msg">You're my forever, <ENTER NAME> ❤️</div>
-        <div style="font-size:4.5rem;margin-top:20px;">💍✨💖</div>
+        <div class="final-msg">it's you. I Love You, Monishka 💖</div>
+        <div style="font-size:4.5rem;margin-top:20px;">✨</div>
     `;
 }
