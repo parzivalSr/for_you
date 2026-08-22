@@ -82,7 +82,7 @@ function collect() {
         level = 4;
         lvl.innerText = "Last Level : The Real One";
         fill.style.width = "100%";
-        heading.innerText = "so — will you?";
+        heading.innerText = "so... will you?";
         collector.style.display = "none";
 
         // Bring back the YES button
