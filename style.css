@@ -1,7 +1,7 @@
 :root {
-    --pink: #ff2f68;
-    --dark: #5a001b;
-    --gold: #ffd700;
+    --pink: #e8607d;
+    --dark: #2b1230;
+    --gold: #f2b880;
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -12,7 +12,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(circle, #ff5c8a, #5a001b);
+    background: radial-gradient(circle, #a1436b, #2b1230);
     font-family: Arial, sans-serif;
     overflow: hidden;
 }
@@ -41,7 +41,7 @@ body {
     height: 100%;
     background: var(--pink);
     box-shadow: 0 0 12px var(--pink);
-    transition: .4s;
+    transition: width .6s cubic-bezier(.22,.9,.32,1);
 }
 
 .lvl-text {
@@ -66,6 +66,7 @@ h1 {
     font-size: 2.3rem;
     text-shadow: 0 0 18px var(--pink);
     min-height: 80px;
+    transition: opacity .3s ease;
 }
 
 .game-area {
@@ -85,7 +86,20 @@ button {
     font-weight: bold;
     cursor: pointer;
     border: 3px solid white;
-    transition: .3s;
+    transition: width .3s cubic-bezier(.34,1.2,.64,1),
+                height .3s cubic-bezier(.34,1.2,.64,1),
+                font-size .3s ease,
+                border-width .3s ease,
+                left .45s cubic-bezier(.22,.9,.32,1),
+                top .45s cubic-bezier(.22,.9,.32,1),
+                transform .35s cubic-bezier(.34,1.4,.64,1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+    line-height: 1;
+    flex-shrink: 0;
 }
 
 #yesBtn {
@@ -111,7 +125,8 @@ button {
     position: fixed;
     z-index: 150;
     box-shadow: 0 0 30px var(--gold);
-    animation: pulse 1s infinite;
+    animation: pulse 1s ease-in-out infinite;
+    transition: left .4s cubic-bezier(.22,.9,.32,1), top .4s cubic-bezier(.22,.9,.32,1);
 }
 
 @keyframes pulse {
@@ -122,11 +137,12 @@ button {
 .heart {
     position: absolute;
     font-size: 22px;
-    animation: float 5s linear forwards;
+    animation: float 5s cubic-bezier(.25,.1,.25,1) forwards;
 }
 
 @keyframes float {
-    from { transform: translateY(110vh) scale(.6); }
+    from { transform: translateY(110vh) scale(.6); opacity: 0; }
+    10% { opacity: 1; }
     to { transform: translateY(-10vh) scale(1.6); opacity: 0; }
 }
 
@@ -135,5 +151,13 @@ button {
     font-size: 3.2rem;
     color: white;
     text-shadow: 0 0 20px var(--pink);
-    animation: pulse 1s infinite;
+    animation: fadeInPulse 3s cubic-bezier(.34,1.2,.64,1) infinite;
+}
+
+@keyframes fadeInPulse {
+    0% { opacity: 0; transform: scale(.85); }
+    20% { opacity: 1; transform: scale(1.06); }
+    35%, 65% { opacity: 1; transform: scale(1); }
+    50% { transform: scale(1.04); }
+    100% { opacity: 1; transform: scale(1); }
 }
