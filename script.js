@@ -82,7 +82,7 @@ function collect() {
         level = 4;
         lvl.innerText = "Last Level : The Real One";
         fill.style.width = "100%";
-        heading.innerText = "so... will you?";
+        heading.innerText = "so — will you?";
         collector.style.display = "none";
 
         // Bring back the YES button
@@ -101,7 +101,7 @@ function collect() {
 function finish() {
     fill.style.width = "100%";
     document.querySelector(".card").innerHTML = `
-        <div class="final-msg">it's you, Monishka <br>I Love You</div>
+        <div class="final-msg">it's you, Monishka<br>I Love You</div>
         <div style="font-size:4.5rem;margin-top:20px;">✨</div>
     `;
 }
